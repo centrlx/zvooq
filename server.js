@@ -64,17 +64,15 @@ const canEditPlaylist = (pl, userId) => {
 // ── TRACKS ──────────────────────────────────────────────────
 app.get('/api/tracks', (req, res) => res.json(readJSON('tracks.json')));
 
-app.post('/api/tracks', uploadFields.fields([
-  { name: 'cover', maxCount: 1 },
-  { name: 'audio', maxCount: 20 }
-]), (req, res) => {
+app.post('/api/tracks', uploadFields.any(), (req, res) => {
   const ownerId = req.body.userId ? parseInt(req.body.userId) : null;
   if (!ownerId) return res.status(403).json({ error: 'Auth required' });
   const tracks = readJSON('tracks.json');
   const albums = readJSON('albums.json');
   const body = req.body;
-  const audioFiles = req.files['audio'] || [];
-  const coverFile = req.files['cover'] ? req.files['cover'][0] : null;
+  const files = Array.isArray(req.files) ? req.files : [];
+  const audioFiles = files.filter(f => f.fieldname === 'audio');
+  const coverFile = files.find(f => f.fieldname === 'cover') || null;
   const coverPath = coverFile ? `/uploads/images/${coverFile.filename}` : '/uploads/images/default.jpg';
 
   if (audioFiles.length === 1) {
