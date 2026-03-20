@@ -237,6 +237,12 @@ function bindUI() {
   if (filterGenre) filterGenre.addEventListener('change', renderAll);
   if (filterType)  filterType.addEventListener('change', renderAll);
 
+  const addTrackLink = document.getElementById('add-track-link');
+  const user = Auth.getUser();
+  if (addTrackLink && !user) {
+    addTrackLink.style.display = 'none';
+  }
+
   // Card actions (delegated)
   if (!indexDocBound) {
     document.addEventListener('click', handleCardClick);

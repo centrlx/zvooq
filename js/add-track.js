@@ -52,6 +52,11 @@ async function ensureDurations(files) {
 document.addEventListener('DOMContentLoaded', () => {
   log('DOMContentLoaded');
   renderHeader('');
+  if (!Auth.isLoggedIn()) {
+    showToast('Войдите, чтобы добавлять треки', 'error');
+    setTimeout(() => { window.location.href = '/auth.html'; }, 600);
+    return;
+  }
   bindDropZone();
   bindCoverUpload();
   bindFormEvents();

@@ -68,6 +68,8 @@ app.post('/api/tracks', uploadFields.fields([
   { name: 'cover', maxCount: 1 },
   { name: 'audio', maxCount: 20 }
 ]), (req, res) => {
+  const ownerId = req.body.userId ? parseInt(req.body.userId) : null;
+  if (!ownerId) return res.status(403).json({ error: 'Auth required' });
   const tracks = readJSON('tracks.json');
   const albums = readJSON('albums.json');
   const body = req.body;
@@ -77,7 +79,6 @@ app.post('/api/tracks', uploadFields.fields([
 
   if (audioFiles.length === 1) {
     // Single track
-    const ownerId = body.userId ? parseInt(body.userId) : null;
     const newTrack = {
       id: Date.now(),
       title: body.title,
@@ -99,7 +100,6 @@ app.post('/api/tracks', uploadFields.fields([
   } else {
     // Album
     const albumId = Date.now();
-    const ownerId = body.userId ? parseInt(body.userId) : null;
     const albumDuration = (Array.isArray(body.durations) ? body.durations : [body.durations || 0])
       .map(d => parseInt(d) || 0)
       .reduce((s, d) => s + d, 0);
