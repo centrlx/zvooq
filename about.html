@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zvooq | О проекте</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="page-container">
+    <div class="about-hero">
+      <div class="about-logo">Zvooq</div>
+      <p class="about-tagline">
+        Полнофункциональный музыкальный веб-сервис для коллекционирования, организации и прослушивания музыки
+      </p>
+    </div>
+
+    <div class="about-grid">
+      <!-- About the project -->
+      <div class="about-card">
+        <h3><span class="material-symbols-rounded">info</span> О проекте</h3>
+        <p>
+          Zvooq — учебный проект музыкального веб-сервиса, разработанный для закрепления навыков работы с DOM, 
+          событиями, массивами объектов и локальным хранилищем. Представляет собой интерактивный инструмент 
+          для коллекционирования музыки с понятным интерфейсом и сохранением данных между сессиями.
+        </p>
+        <br>
+        <p><strong style="color:var(--text);">Стек:</strong> HTML, CSS, JavaScript, Node.js, Express</p>
+      </div>
+
+      <!-- Author -->
+      <div class="about-card">
+        <h3><span class="material-symbols-rounded">person</span> Автор</h3>
+        <p><strong style="color:var(--text);">Досов Гила Эмильевич</strong></p>
+        <p style="margin-top:4px;">11ТИС/2024, 2 КУРС</p>
+        <br>
+        <a href="https://github.com/YOUR_GITHUB" target="_blank" class="author-link">
+          <span class="material-symbols-rounded">code</span> GitHub профиль
+        </a>
+      </div>
+
+      <!-- Features -->
+      <div class="about-card">
+        <h3><span class="material-symbols-rounded">auto_awesome</span> Возможности</h3>
+        <ul>
+          <li>Добавление треков и альбомов с аудио и обложкой</li>
+          <li>Система избранного с мгновенным обновлением</li>
+          <li>Создание и управление плейлистами</li>
+          <li>Поиск и фильтрация по жанру и типу</li>
+          <li>Постоянный аудиоплеер без разрывов</li>
+          <li>Статистика и архив удалённых треков</li>
+          <li>Авторизация и профиль пользователя</li>
+          <li>Адаптивный дизайн для мобильных</li>
+        </ul>
+      </div>
+
+      <!-- How to use -->
+      <div class="about-card">
+        <h3><span class="material-symbols-rounded">menu_book</span> Инструкция</h3>
+        <ul>
+          <li><strong style="color:var(--text);">Добавить трек:</strong> кнопка «+ Добавить трек» → загрузите MP3 → заполните форму → Сохранить</li>
+          <li><strong style="color:var(--text);">Альбом:</strong> загрузите 2+ аудиофайла — система создаёт альбом автоматически</li>
+          <li><strong style="color:var(--text);">Избранное:</strong> нажмите <span class="material-symbols-rounded">favorite</span> на карточке трека</li>
+          <li><strong style="color:var(--text);">Плейлист:</strong> создайте → откройте → добавьте треки через «+ Добавить трек»</li>
+          <li><strong style="color:var(--text);">Удаление:</strong> кнопка «<span class="material-symbols-rounded">delete</span> Удалить» — трек перемещается в архив</li>
+          <li><strong style="color:var(--text);">Редактирование:</strong> кнопка «<span class="material-symbols-rounded">edit</span> Изменить» на карточке</li>
+          <li><strong style="color:var(--text);">Плеер:</strong> кликните <span class="material-symbols-rounded">play_arrow</span> на карточке — плеер внизу продолжает играть при переходах</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tech stack -->
+    <div class="about-card" style="margin-bottom:0;">
+      <h3><span class="material-symbols-rounded">handyman</span> Технологии</h3>
+      <div class="about-tech">
+        <span class="about-chip">HTML5</span>
+        <span class="about-chip">CSS3</span>
+        <span class="about-chip">JavaScript ES6+</span>
+        <span class="about-chip">Node.js</span>
+        <span class="about-chip">Express.js</span>
+        <span class="about-chip">Multer</span>
+        <span class="about-chip">REST API</span>
+        <span class="about-chip">LocalStorage</span>
+        <span class="about-chip">SessionStorage</span>
+      </div>
+    </div>
+  </main>
+
+  <div id="global-player"></div>
+  <div id="toast-container"></div>
+
+  <script src="/js/shared.js"></script>
+  <script src="/js/spa.js"></script>
+</body>
+</html>

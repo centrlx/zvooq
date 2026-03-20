@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zvooq | Главная</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="page-container">
+    <div class="page-header" id="main-page-header">
+      <div>
+        <h1 class="page-title">Ваша музыка</h1>
+        <p class="page-subtitle">Треки, альбомы и плейлисты в одном месте</p>
+      </div>
+      <a href="/add-track.html" class="btn btn-primary">+ Добавить трек</a>
+    </div>
+    <div class="page-header" id="view-all-header" style="display:none;margin-top:-8px;">
+      <div>
+        <h1 class="page-title" id="view-all-title">Все</h1>
+        <p class="page-subtitle" id="view-all-subtitle">Полный список</p>
+      </div>
+      <button class="btn btn-secondary" id="view-all-back">← Назад</button>
+    </div>
+
+    <!-- Search block -->
+    <div class="search-bar-wrap">
+      <div class="search-input-wrap">
+        <span class="icon material-symbols-rounded">search</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Поиск по названию, артисту, жанру…">
+      </div>
+      <select class="filter-select" id="filter-genre">
+        <option value="">Все жанры</option>
+      </select>
+      <select class="filter-select" id="filter-type">
+        <option value="">Все типы</option>
+        <option value="track">Треки</option>
+        <option value="album">Альбомы</option>
+      </select>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="all">Всё</button>
+      <button class="tab-btn" data-tab="tracks">Треки</button>
+      <button class="tab-btn" data-tab="albums">Альбомы</button>
+      <button class="tab-btn" data-tab="playlists">Плейлисты</button>
+    </div>
+
+    <!-- ALL tab -->
+    <div class="tab-content active" id="tab-all">
+      <div class="section" id="section-tracks">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title"><span class="dot"></span> Треки <span class="section-count" id="track-count"></span></h2>
+            <button class="section-link" id="tracks-show-all" style="display:none;">Показать все</button>
+          </div>
+        </div>
+        <div class="cards-grid cards-row" id="tracks-grid">
+          <div class="spinner"></div>
+        </div>
+      </div>
+      <div class="section" id="section-albums">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title"><span class="dot"></span> Альбомы <span class="section-count" id="album-count"></span></h2>
+            <button class="section-link" id="albums-show-all" style="display:none;">Показать все</button>
+          </div>
+        </div>
+        <div class="cards-grid cards-row" id="albums-grid">
+          <div class="spinner"></div>
+        </div>
+      </div>
+      <div class="section" id="section-playlists">
+        <div class="section-header">
+          <div class="section-title-wrap">
+            <h2 class="section-title"><span class="dot"></span> Плейлисты <span class="section-count" id="playlist-count"></span></h2>
+            <button class="section-link" id="playlists-show-all" style="display:none;">Показать все</button>
+          </div>
+          <button class="btn btn-outline btn-sm" id="new-playlist-btn">+ Плейлист</button>
+        </div>
+        <div class="cards-grid cards-row" id="playlists-grid">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tracks tab -->
+    <div class="tab-content" id="tab-tracks">
+      <div class="cards-grid cards-row" id="tracks-grid-tab"><div class="spinner"></div></div>
+    </div>
+    <!-- Albums tab -->
+    <div class="tab-content" id="tab-albums">
+      <div class="cards-grid cards-row" id="albums-grid-tab"><div class="spinner"></div></div>
+    </div>
+    <!-- Playlists tab -->
+    <div class="tab-content" id="tab-playlists">
+      <div class="cards-grid cards-row" id="playlists-grid-tab"><div class="spinner"></div></div>
+    </div>
+  </main>
+
+  <!-- New Playlist Modal -->
+  <div class="modal-overlay" id="playlist-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Новый плейлист</span>
+        <button class="modal-close icon-only" id="modal-close-btn" aria-label="Закрыть">
+          <span class="material-symbols-rounded">close</span>
+        </button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Название <span>*</span></label>
+        <input type="text" class="form-input" id="playlist-name-input" placeholder="Например: Вечерние">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button class="btn btn-primary" id="create-playlist-btn">Создать</button>
+        <button class="btn btn-secondary" id="cancel-playlist-btn">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Player -->
+  <div id="global-player"></div>
+  <div id="toast-container"></div>
+
+  <link rel="preload" as="script" href="/js/index.js">
+  <link rel="preload" as="script" href="/js/playlist.js">
+  <link rel="preload" as="script" href="/js/favorite.js">
+  <link rel="preload" as="script" href="/js/stats.js">
+  <link rel="preload" as="script" href="/js/archive.js">
+  <link rel="preload" as="script" href="/js/about.js">
+  <link rel="preload" as="script" href="/js/profile.js">
+  <script src="/js/shared.js"></script>
+  <script src="/js/spa.js"></script>
+</body>
+</html>

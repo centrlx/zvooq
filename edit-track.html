@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zvooq | Редактировать</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title" id="edit-page-title">Редактировать</h1>
+        <p class="page-subtitle">Измените информацию о треке или альбоме</p>
+      </div>
+      <a href="/index.html" class="btn btn-secondary">← Назад</a>
+    </div>
+
+    <div id="edit-loading" class="spinner"></div>
+
+    <form id="edit-form" class="form-card" style="display:none;" novalidate>
+      <h2 class="form-title" id="edit-form-title">Редактирование</h2>
+
+      <div class="form-group" id="album-title-group" style="display:none;">
+        <label class="form-label">Название альбома <span>*</span></label>
+        <input type="text" class="form-input" id="edit-album-title">
+      </div>
+
+      <div class="form-group" id="track-title-group">
+        <label class="form-label">Название <span>*</span></label>
+        <input type="text" class="form-input" id="edit-title" placeholder="Название">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Артист(ы) <span>*</span></label>
+          <input type="text" class="form-input" id="edit-artist" placeholder="Через запятую">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Жанр <span>*</span></label>
+          <select class="form-select" id="edit-genre">
+            <option value="">Выберите жанр</option>
+            <option>Hip-Hop</option><option>R&B</option><option>Pop</option>
+            <option>Rock</option><option>Electronic</option><option>Jazz</option>
+            <option>Classical</option><option>Synthwave</option><option>Lo-Fi</option>
+            <option>Soul</option><option>Reggae</option><option>Metal</option>
+            <option>Indie</option><option>Alternative</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Обложка (текущая)</label>
+        <img id="edit-cover-preview" src="" alt="" style="width:120px;height:120px;border-radius:10px;object-fit:cover;border:1px solid var(--border);">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Дата выхода</label>
+          <input type="date" class="form-input" id="edit-releaseDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Лейбл</label>
+          <input type="text" class="form-input" id="edit-label" placeholder="Название лейбла">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Описание</label>
+        <textarea class="form-textarea" id="edit-description"></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button type="submit" class="btn btn-primary"><span class="material-symbols-rounded">save</span> Сохранить изменения</button>
+        <a href="/index.html" class="btn btn-secondary">Отмена</a>
+      </div>
+    </form>
+  </main>
+
+  <div id="global-player"></div>
+  <div id="toast-container"></div>
+
+  <script src="/js/shared.js"></script>
+  <script src="/js/edit-track.js"></script>
+</body>
+</html>

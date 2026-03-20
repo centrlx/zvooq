@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zvooq | Добавить трек</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title" id="form-page-title">Добавить трек</h1>
+        <p class="page-subtitle">Загрузите один трек или несколько для создания альбома</p>
+      </div>
+      <a href="/index.html" class="btn btn-secondary">← Назад</a>
+    </div>
+
+    <!-- STEP 1: Upload audio files -->
+    <div id="step-upload" class="form-card">
+      <h2 class="form-title">Шаг 1: Загрузите аудио</h2>
+      <p style="color:var(--text3);font-size:14px;margin-bottom:20px;">
+        1 файл → трек &nbsp;|&nbsp; 2+ файла → альбом
+      </p>
+
+      <label class="drop-zone" id="drop-zone">
+        <div class="drop-icon material-symbols-rounded">music_note</div>
+        <p>Перетащите MP3/WAV файлы сюда</p>
+        <span>или нажмите для выбора</span>
+        <input type="file" id="audio-files" accept="audio/*" multiple>
+      </label>
+
+      <div class="file-list" id="file-list"></div>
+
+      <div style="margin-top:20px;display:flex;gap:10px;">
+        <button class="btn btn-primary" id="proceed-btn" disabled>Далее →</button>
+        <a href="/index.html" class="btn btn-secondary">Отмена</a>
+      </div>
+    </div>
+
+    <!-- STEP 2: Form -->
+    <form id="track-form" class="form-card" style="display:none;" novalidate>
+      <h2 class="form-title" id="form-title-text">Информация о треке</h2>
+
+      <!-- Album title (shown only for albums) -->
+      <div class="form-group" id="album-title-group" style="display:none;">
+        <label class="form-label">Название альбома <span>*</span></label>
+        <input type="text" class="form-input" name="albumTitle" id="album-title" placeholder="Название альбома">
+        <div class="form-error" id="err-albumTitle">Введите название альбома</div>
+      </div>
+
+      <!-- Track titles (dynamic for albums) -->
+      <div id="track-titles-group">
+        <div class="form-group" id="single-title-group">
+          <label class="form-label">Название трека <span>*</span></label>
+          <input type="text" class="form-input" name="title" id="single-title" placeholder="Название">
+          <div class="form-error" id="err-title">Введите название трека</div>
+        </div>
+        <div id="multi-titles-group" style="display:none;"></div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Артист(ы) <span>*</span></label>
+          <input type="text" class="form-input" name="artist" id="artist" placeholder="Через запятую">
+          <div class="form-error" id="err-artist">Укажите артиста</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Жанр <span>*</span></label>
+          <select class="form-select" name="genre" id="genre">
+            <option value="">Выберите жанр</option>
+            <option>Hip-Hop</option><option>R&B</option><option>Pop</option>
+            <option>Rock</option><option>Electronic</option><option>Jazz</option>
+            <option>Classical</option><option>Synthwave</option><option>Lo-Fi</option>
+            <option>Soul</option><option>Reggae</option><option>Metal</option>
+            <option>Indie</option><option>Alternative</option><option>Other</option>
+          </select>
+          <div class="form-error" id="err-genre">Выберите жанр</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Обложка</label>
+        <label class="drop-zone" id="cover-drop-zone" style="padding:20px;">
+          <div class="drop-icon material-symbols-rounded" style="font-size:28px;">image</div>
+          <p style="font-size:13px;">Загрузить обложку</p>
+          <input type="file" id="cover-file" name="cover" accept="image/*">
+        </label>
+        <img class="cover-preview" id="cover-preview" src="" alt="Обложка">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Дата выхода</label>
+          <input type="date" class="form-input" name="releaseDate" id="releaseDate">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Лейбл</label>
+          <input type="text" class="form-input" name="label" id="label" placeholder="Название лейбла">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Описание</label>
+        <textarea class="form-textarea" name="description" id="description" placeholder="О чём этот трек/альбом…"></textarea>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button type="submit" class="btn btn-primary" id="save-btn"><span class="material-symbols-rounded">save</span> Сохранить</button>
+        <button type="button" class="btn btn-secondary" id="back-btn">← Назад</button>
+        <a href="/index.html" class="btn btn-secondary">Отмена</a>
+      </div>
+    </form>
+  </main>
+
+  <!-- No persistent player on add-track page per spec -->
+  <div id="toast-container"></div>
+
+  <script src="/js/shared.js"></script>
+  <script src="/js/add-track.js"></script>
+</body>
+</html>

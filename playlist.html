@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zvooq | Плейлисты</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="site-header"></header>
+
+  <main class="page-container">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title" id="pl-page-title">Плейлисты</h1>
+        <p class="page-subtitle" id="pl-subtitle">Ваши коллекции</p>
+      </div>
+      <button class="btn btn-primary" id="new-pl-btn">+ Создать плейлист</button>
+    </div>
+
+    <!-- Playlist detail view (shown when ?id=... in URL) -->
+    <div id="pl-detail" style="display:none;">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+        <button class="btn btn-secondary btn-sm" id="back-to-list">← Все плейлисты</button>
+        <h2 class="page-title" id="pl-detail-title" style="margin:0;font-size:22px;"></h2>
+      </div>
+      <div style="margin-bottom:20px;">
+        <button class="btn btn-outline btn-sm" id="add-track-to-pl-btn">+ Добавить трек</button>
+        <button class="btn btn-danger btn-sm" id="delete-pl-btn" style="margin-left:8px;">
+          <span class="material-symbols-rounded">delete</span> Удалить плейлист
+        </button>
+      </div>
+      <div id="pl-tracks-list"></div>
+    </div>
+
+    <!-- All playlists list -->
+    <div id="pl-list">
+      <div class="cards-grid" id="playlists-grid"><div class="spinner"></div></div>
+    </div>
+
+    <!-- Add track to playlist modal -->
+    <div class="modal-overlay" id="add-track-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Добавить трек в плейлист</span>
+          <button class="modal-close icon-only" id="close-add-track-modal" aria-label="Закрыть">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+        <div class="search-input-wrap" style="margin-bottom:16px;">
+          <span class="icon material-symbols-rounded">search</span>
+          <input type="text" class="search-input" id="modal-search" placeholder="Поиск…">
+        </div>
+        <div id="modal-track-list" style="max-height:300px;overflow-y:auto;"></div>
+      </div>
+    </div>
+
+    <!-- New Playlist Modal -->
+    <div class="modal-overlay" id="new-pl-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">Новый плейлист</span>
+          <button class="modal-close icon-only" id="close-new-pl-modal" aria-label="Закрыть">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Название <span>*</span></label>
+          <input type="text" class="form-input" id="new-pl-name" placeholder="Мой плейлист">
+        </div>
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button class="btn btn-primary" id="create-pl-btn">Создать</button>
+          <button class="btn btn-secondary" id="cancel-pl-btn">Отмена</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="global-player"></div>
+  <div id="toast-container"></div>
+
+  <script src="/js/shared.js"></script>
+  <script src="/js/spa.js"></script>
+</body>
+</html>
