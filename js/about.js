@@ -1,6 +1,5 @@
-// about.js — About page
+
 async function initAbout() {
-  window.ZLog?.('about', 'initAbout');
   renderHeader('about');
 }
 

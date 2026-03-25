@@ -1,11 +1,9 @@
-/**
- * archive.js — Archive page (deleted tracks & albums)
- */
+
 
 async function initArchive() {
-  const log = (msg, data) => window.ZLog?.('archive', msg, data);
   const logErr = (msg, err) => window.ZError?.('archive', msg, err);
-  log('initArchive start');
+  
+const log = () => {};log('initArchive start');
   renderHeader('archive');
   try {
     const archive = await API.get('/api/archive');

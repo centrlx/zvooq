@@ -1,15 +1,12 @@
-/**
- * add-track.js — Logic for add-track.html
- * Handles audio upload, form build for track vs album, validation, submission
- */
+
 
 let selectedFiles = [];
 let isAlbum = false;
 const fileDurations = new Map();
-const log = (msg, data) => window.ZLog?.('add-track', msg, data);
 const logErr = (msg, err) => window.ZError?.('add-track', msg, err);
 
-function fileKey(f) {
+
+const log = () => {};function fileKey(f) {
   return `${f.name}_${f.size}_${f.lastModified}`;
 }
 
@@ -60,11 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
   bindDropZone();
   bindCoverUpload();
   bindFormEvents();
-  // Set today as default date
+
   document.getElementById('releaseDate').value = new Date().toISOString().split('T')[0];
 });
 
-// ── Drop Zone ────────────────────────────────────────────────
+
 
 function bindDropZone() {
   log('bindDropZone');
@@ -114,7 +111,7 @@ function renderFileList() {
   proceedBtn.disabled = selectedFiles.length === 0;
 }
 
-// ── Proceed to form ──────────────────────────────────────────
+
 
 document.getElementById('proceed-btn').addEventListener('click', () => {
   isAlbum = selectedFiles.length > 1;
@@ -168,7 +165,7 @@ function buildForm() {
   }
 }
 
-// ── Cover Upload ─────────────────────────────────────────────
+
 
 function bindCoverUpload() {
   log('bindCoverUpload');
@@ -193,7 +190,7 @@ function bindCoverUpload() {
     const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith('image/')) {
       log('cover dropped', file.name);
-      // Manually set to input
+
       const dt = new DataTransfer();
       dt.items.add(file);
       coverInput.files = dt.files;
@@ -203,14 +200,14 @@ function bindCoverUpload() {
   });
 }
 
-// ── Form events ──────────────────────────────────────────────
+
 
 function bindFormEvents() {
   log('bindFormEvents');
   document.getElementById('track-form').addEventListener('submit', handleSubmit);
 }
 
-// ── Validation ───────────────────────────────────────────────
+
 
 function validateForm() {
   log('validateForm');
@@ -228,7 +225,7 @@ function validateForm() {
     valid = false;
   };
 
-  // Clear all errors first
+
   ['err-albumTitle','err-title','err-artist','err-genre'].forEach(id => clearErr(id));
 
   if (isAlbum) {
@@ -257,7 +254,7 @@ function validateForm() {
   return valid;
 }
 
-// ── Submit ───────────────────────────────────────────────────
+
 
 async function handleSubmit(e) {
   log('handleSubmit start');
@@ -270,17 +267,17 @@ async function handleSubmit(e) {
 
   const formData = new FormData();
 
-  // Audio files
+
   selectedFiles.forEach(f => formData.append('audio', f));
 
-  // Cover
+
   const coverFile = document.getElementById('cover-file').files[0];
   if (coverFile) formData.append('cover', coverFile);
 
   const user = Auth.getUser();
   if (user?.id) formData.append('userId', user.id);
 
-  // Fields
+
   formData.append('artist',      document.getElementById('artist').value.trim());
   formData.append('genre',       document.getElementById('genre').value);
   formData.append('description', document.getElementById('description').value.trim());

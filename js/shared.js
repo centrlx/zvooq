@@ -1,40 +1,27 @@
-/**
- * shared.js — Global utilities: API, Player, Auth, Toast
- * Used across all pages of Zvooq
- */
 
-// ═══════════════════════════════════════════
-// DEBUG LOGGING
-// ═══════════════════════════════════════════
 
-function ZLog(scope, message, data) {
-  if (window.__ZLOG_DISABLED__) return;
-  const prefix = `[Zvooq] ${scope}: ${message}`;
-  if (data !== undefined) console.log(prefix, data);
-  else console.log(prefix);
-}
+
+
+
+
 
 function ZError(scope, message, error) {
   if (window.__ZLOG_DISABLED__) return;
   console.error(`[Zvooq] ${scope}: ${message}`, error || '');
 }
 
-window.ZLog = ZLog;
 window.ZError = ZError;
 
-// ═══════════════════════════════════════════
-// API HELPERS
-// ═══════════════════════════════════════════
+
+
+
 
 const API = {
   async get(url) {
-    ZLog('API', `GET ${url} → start`);
     try {
       const res = await fetch(url);
-      ZLog('API', `GET ${url} ← ${res.status}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      ZLog('API', `GET ${url} ✓`, data);
       return data;
     } catch (e) {
       ZError('API', `GET ${url} ✗`, e);
@@ -42,17 +29,14 @@ const API = {
     }
   },
   async post(url, data) {
-    ZLog('API', `POST ${url} → start`, data);
     try {
       const res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      ZLog('API', `POST ${url} ← ${res.status}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const out = await res.json();
-      ZLog('API', `POST ${url} ✓`, out);
       return out;
     } catch (e) {
       ZError('API', `POST ${url} ✗`, e);
@@ -60,17 +44,14 @@ const API = {
     }
   },
   async put(url, data) {
-    ZLog('API', `PUT ${url} → start`, data);
     try {
       const res = await fetch(url, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      ZLog('API', `PUT ${url} ← ${res.status}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const out = await res.json();
-      ZLog('API', `PUT ${url} ✓`, out);
       return out;
     } catch (e) {
       ZError('API', `PUT ${url} ✗`, e);
@@ -78,13 +59,10 @@ const API = {
     }
   },
   async delete(url) {
-    ZLog('API', `DELETE ${url} → start`);
     try {
       const res = await fetch(url, { method: 'DELETE' });
-      ZLog('API', `DELETE ${url} ← ${res.status}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const out = await res.json();
-      ZLog('API', `DELETE ${url} ✓`, out);
       return out;
     } catch (e) {
       ZError('API', `DELETE ${url} ✗`, e);
@@ -92,13 +70,10 @@ const API = {
     }
   },
   async postForm(url, formData) {
-    ZLog('API', `POST_FORM ${url} → start`);
     try {
       const res = await fetch(url, { method: 'POST', body: formData });
-      ZLog('API', `POST_FORM ${url} ← ${res.status}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const out = await res.json();
-      ZLog('API', `POST_FORM ${url} ✓`, out);
       return out;
     } catch (e) {
       ZError('API', `POST_FORM ${url} ✗`, e);
@@ -107,41 +82,38 @@ const API = {
   }
 };
 
-// ═══════════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════════
+
+
+
 
 const Auth = {
   getUser() {
     try {
       const u = JSON.parse(localStorage.getItem('zvooq_user'));
-      ZLog('Auth', 'getUser', u);
       return u;
     } catch (e) {
       ZError('Auth', 'getUser parse error', e);
       return null;
     }
   },
-  setUser(u) { ZLog('Auth', 'setUser', u); localStorage.setItem('zvooq_user', JSON.stringify(u)); },
+  setUser(u) { localStorage.setItem('zvooq_user', JSON.stringify(u)); },
   logout() {
-    ZLog('Auth', 'logout');
     if (window.Player?.stop) Player.stop(true);
     localStorage.removeItem('zvooq_user');
     window.location.href = '/auth.html';
   },
   isLoggedIn() { return !!this.getUser(); },
   requireAuth() {
-    if (!this.isLoggedIn()) { ZLog('Auth', 'requireAuth redirect'); window.location.href = '/auth.html'; return false; }
+    if (!this.isLoggedIn()) { window.location.href = '/auth.html'; return false; }
     return true;
   }
 };
 
-// ═══════════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════════
+
+
+
 
 function showToast(msg, type = 'success', duration = 3000, icon = '') {
-  ZLog('Toast', `${type}: ${msg}`);
   let container = document.getElementById('toast-container');
   if (!container) {
     container = document.createElement('div');
@@ -170,9 +142,9 @@ function showToast(msg, type = 'success', duration = 3000, icon = '') {
   }, duration);
 }
 
-// ═══════════════════════════════════════════
-// FORMAT HELPERS
-// ═══════════════════════════════════════════
+
+
+
 
 function formatDuration(seconds) {
   if (!seconds) return '0:00';
@@ -190,14 +162,14 @@ function totalDuration(tracks) {
   return tracks.reduce((sum, t) => sum + (t.duration || 0), 0);
 }
 
-// ═══════════════════════════════════════════
-// GLOBAL PLAYER
-// ═══════════════════════════════════════════
+
+
+
 
 const Player = (() => {
-  // State stored in sessionStorage so it survives page navigation
+
   let state = JSON.parse(sessionStorage.getItem('zvooq_player') || '{}');
-  // { queue: [], currentIndex: 0, playing: false, volume: 0.8, progress: 0 }
+
   if (!state.queue) state.queue = [];
   if (state.volume === undefined) state.volume = 0.8;
 
@@ -207,8 +179,7 @@ const Player = (() => {
   function saveState() { sessionStorage.setItem('zvooq_player', JSON.stringify(state)); }
 
   function initAudio() {
-    ZLog('Player', 'initAudio');
-    // Use a shared audio element persisted via sessionStorage src
+
     audio = document.getElementById('zvooq-audio');
     if (!audio) {
       audio = document.createElement('audio');
@@ -227,20 +198,16 @@ const Player = (() => {
       saveState();
     });
 
-    audio.addEventListener('ended', () => { ZLog('Player', 'ended'); next(); });
     audio.addEventListener('loadedmetadata', () => {
-      ZLog('Player', 'loadedmetadata', { duration: audio.duration });
       if (ui.total) ui.total.textContent = formatDuration(audio.duration);
     });
     audio.addEventListener('play', () => {
-      ZLog('Player', 'play');
       state.playing = true;
       state.autoplayPending = false;
       updatePlayBtn(true);
       saveState();
     });
     audio.addEventListener('pause', () => {
-      ZLog('Player', 'pause');
       state.playing = false;
       updatePlayBtn(false);
       saveState();
@@ -248,7 +215,6 @@ const Player = (() => {
   }
 
   function buildUI() {
-    ZLog('Player', 'buildUI');
     const playerEl = document.getElementById('global-player');
     if (!playerEl) return;
 
@@ -294,28 +260,20 @@ const Player = (() => {
       vol:     document.getElementById('volume-slider')
     };
 
-    // Bind controls
-    document.getElementById('player-play').addEventListener('click', () => { ZLog('Player', 'click play'); togglePlay(); });
-    document.getElementById('player-prev').addEventListener('click', () => { ZLog('Player', 'click prev'); prev(); });
-    document.getElementById('player-next').addEventListener('click', () => { ZLog('Player', 'click next'); next(); });
-    document.getElementById('player-shuffle').addEventListener('click', () => { ZLog('Player', 'click shuffle'); shuffle(); });
-    document.getElementById('player-repeat').addEventListener('click', () => { ZLog('Player', 'click repeat'); toggleRepeat(); });
 
     ui.progBar.addEventListener('click', (e) => {
       const rect = ui.progBar.getBoundingClientRect();
       const pct = (e.clientX - rect.left) / rect.width;
       if (audio) audio.currentTime = audio.duration * pct;
-      ZLog('Player', 'seek', { pct });
     });
 
     ui.vol.addEventListener('input', () => {
       state.volume = parseFloat(ui.vol.value);
       if (audio) audio.volume = state.volume;
       saveState();
-      ZLog('Player', 'volume', state.volume);
     });
 
-    // Restore track info if we have a queue
+
     if (state.queue.length > 0) {
       const track = state.queue[state.currentIndex || 0];
       if (track) updateTrackUI(track);
@@ -325,7 +283,6 @@ const Player = (() => {
 
   function updateTrackUI(track) {
     if (!ui.title) return;
-    ZLog('Player', 'updateTrackUI', track);
     ui.title.textContent  = track.title || 'Unknown';
     ui.artist.textContent = track.artist || '—';
     ui.cover.src          = track.cover || '';
@@ -339,7 +296,6 @@ const Player = (() => {
 
   function play(track, queueTracks) {
     if (!audio) return;
-    ZLog('Player', 'play()', { track, queueTracksLen: queueTracks?.length });
     if (queueTracks) {
       state.queue = queueTracks;
       state.currentIndex = queueTracks.findIndex(t => t.id === track.id);
@@ -356,14 +312,12 @@ const Player = (() => {
 
   function togglePlay() {
     if (!audio || !audio.src) return;
-    ZLog('Player', 'togglePlay', { paused: audio.paused });
     if (audio.paused) audio.play().catch(() => {});
     else audio.pause();
   }
 
   function stop(clearQueue = false) {
     if (!audio) return;
-    ZLog('Player', 'stop', { clearQueue });
     audio.pause();
     audio.currentTime = 0;
     audio.src = '';
@@ -379,21 +333,18 @@ const Player = (() => {
 
   function prev() {
     if (!state.queue.length) return;
-    ZLog('Player', 'prev');
     state.currentIndex = (state.currentIndex - 1 + state.queue.length) % state.queue.length;
     play(state.queue[state.currentIndex]);
   }
 
   function next() {
     if (!state.queue.length) return;
-    ZLog('Player', 'next');
     if (state.repeat) { audio.currentTime = 0; audio.play().catch(() => {}); return; }
     state.currentIndex = (state.currentIndex + 1) % state.queue.length;
     play(state.queue[state.currentIndex]);
   }
 
   function shuffle() {
-    ZLog('Player', 'shuffle');
     for (let i = state.queue.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [state.queue[i], state.queue[j]] = [state.queue[j], state.queue[i]];
@@ -405,7 +356,6 @@ const Player = (() => {
 
   function toggleRepeat() {
     state.repeat = !state.repeat;
-    ZLog('Player', 'repeat', state.repeat);
     const btn = document.getElementById('player-repeat');
     if (btn) btn.style.color = state.repeat ? 'var(--rose)' : '';
     showToast(state.repeat ? 'Повтор включён' : 'Повтор выключен', 'success', 1500);
@@ -414,7 +364,6 @@ const Player = (() => {
 
   function requestAutoplay() {
     if (!audio) return;
-    ZLog('Player', 'requestAutoplay');
     audio.play().then(() => {
       state.autoplayPending = false;
       saveState();
@@ -427,7 +376,6 @@ const Player = (() => {
   function bindAutoplayResume() {
     const resume = () => {
       if (!state.autoplayPending) return;
-      ZLog('Player', 'resume autoplay by user gesture');
       requestAutoplay();
       if (!state.autoplayPending) {
         window.removeEventListener('click', resume, true);
@@ -439,10 +387,9 @@ const Player = (() => {
   }
 
   function init() {
-    ZLog('Player', 'init');
     initAudio();
     buildUI();
-    // If was playing, try to restore src and resume playback
+
     if (state.queue.length > 0 && audio) {
       const track = state.queue[state.currentIndex || 0];
       if (track && track.audio && !audio.src.includes(track.audio)) {
@@ -460,12 +407,11 @@ const Player = (() => {
   return { init, play, togglePlay, prev, next, stop };
 })();
 
-// ═══════════════════════════════════════════
-// HEADER RENDERER
-// ═══════════════════════════════════════════
+
+
+
 
 function renderHeader(activePage = '') {
-  ZLog('Header', `renderHeader ${activePage}`);
   const user = Auth.getUser();
   const nav = [
     { href: '/index.html',    label: 'Главная',    key: 'index' },
@@ -537,12 +483,11 @@ function renderHeader(activePage = '') {
   }
 }
 
-// ═══════════════════════════════════════════
-// FAVORITE TOGGLE (shared logic)
-// ═══════════════════════════════════════════
+
+
+
 
 async function toggleFavorite(trackId, btn) {
-  ZLog('Favorite', 'toggleFavorite', { trackId });
   const user = Auth.getUser();
   if (!user) { showToast('Войдите, чтобы добавлять в избранное', 'error'); return; }
   try {
@@ -554,7 +499,7 @@ async function toggleFavorite(trackId, btn) {
       const icon = btn.querySelector('.material-symbols-rounded');
       if (icon) icon.textContent = isFav ? 'favorite' : 'favorite_border';
     }
-    // Update local user cache
+
     const updatedUser = { ...user };
     if (!updatedUser.favoriteTracks) updatedUser.favoriteTracks = [];
     if (isFav) { if (!updatedUser.favoriteTracks.includes(trackId)) updatedUser.favoriteTracks.push(trackId); }
@@ -567,9 +512,9 @@ async function toggleFavorite(trackId, btn) {
   }
 }
 
-// ═══════════════════════════════════════════
-// CARD BUILDER
-// ═══════════════════════════════════════════
+
+
+
 
 function buildCard(item, albumTracks, options = {}) {
   const { isAlbum = false, favTrackIds = [] } = options;
@@ -639,11 +584,10 @@ function buildCard(item, albumTracks, options = {}) {
     </div>`;
 }
 
-// ═══════════════════════════════════════════
-// INIT PLAYER ON EVERY PAGE
-// ═══════════════════════════════════════════
+
+
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  ZLog('App', 'DOMContentLoaded → Player.init');
   Player.init();
 });

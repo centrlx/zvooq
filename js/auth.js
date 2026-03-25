@@ -1,12 +1,9 @@
-/**
- * auth.js — Login / Register
- */
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  const log = (msg, data) => window.ZLog?.('auth', msg, data);
   renderHeader('');
 
-  // If already logged in, redirect
+
   if (Auth.isLoggedIn()) { log('already logged in → redirect'); window.location.href = '/index.html'; return; }
 
   document.getElementById('to-register').addEventListener('click', (e) => {
@@ -25,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('login-btn').addEventListener('click', handleLogin);
   document.getElementById('register-btn').addEventListener('click', handleRegister);
 
-  // Enter key submit
+
   document.getElementById('login-password').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') handleLogin();
   });
@@ -35,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function handleLogin() {
-  const log = (msg, data) => window.ZLog?.('auth', msg, data);
   const logErr = (msg, err) => window.ZError?.('auth', msg, err);
-  log('handleLogin');
+  
+const log = () => {};log('handleLogin');
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value;
   if (!username || !password) { alert('Введите имя пользователя и пароль'); return; }
@@ -54,7 +51,6 @@ async function handleLogin() {
 }
 
 async function handleRegister() {
-  const log = (msg, data) => window.ZLog?.('auth', msg, data);
   const logErr = (msg, err) => window.ZError?.('auth', msg, err);
   log('handleRegister');
   const username  = document.getElementById('reg-username').value.trim();

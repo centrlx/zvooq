@@ -1,12 +1,10 @@
-/**
- * favorite.js — Favorites page
- */
+
 
 let favTracks = [];
-const log = (msg, data) => window.ZLog?.('favorite', msg, data);
 const logErr = (msg, err) => window.ZError?.('favorite', msg, err);
 
-async function initFavorite() {
+
+const log = () => {};async function initFavorite() {
   log('initFavorite start');
   renderHeader('favorite');
   const user = Auth.getUser();
@@ -86,9 +84,9 @@ function bindCardEvents() {
     }
 
     if (action === 'fav') {
-      // Remove from favorites
+
       await toggleFavorite(id, btn);
-      // Remove card from DOM immediately
+
       const card = document.getElementById(`track-${id}`);
       if (card) {
         card.classList.add('is-removing');

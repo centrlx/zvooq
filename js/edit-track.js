@@ -1,11 +1,9 @@
-/**
- * edit-track.js — Edit track or album
- */
+
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const log = (msg, data) => window.ZLog?.('edit-track', msg, data);
   const logErr = (msg, err) => window.ZError?.('edit-track', msg, err);
-  log('DOMContentLoaded');
+  
+const log = () => {};log('DOMContentLoaded');
   renderHeader('');
   const params = new URLSearchParams(window.location.search);
   const id   = params.get('id');
@@ -31,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (!item) { showToast('Элемент не найден', 'error'); return; }
 
-    // Pre-fill
+
     if (type === 'album') {
       document.getElementById('edit-album-title').value = item.title || '';
     } else {

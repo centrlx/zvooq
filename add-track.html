@@ -18,7 +18,7 @@
       <a href="/index.html" class="btn btn-secondary">← Назад</a>
     </div>
 
-    <!-- STEP 1: Upload audio files -->
+    
     <div id="step-upload" class="form-card">
       <h2 class="form-title">Шаг 1: Загрузите аудио</h2>
       <p class="text-muted text-sm mb-20">
@@ -40,18 +40,18 @@
       </div>
     </div>
 
-    <!-- STEP 2: Form -->
+    
     <form id="track-form" class="form-card is-hidden" novalidate>
       <h2 class="form-title" id="form-title-text">Информация о треке</h2>
 
-      <!-- Album title (shown only for albums) -->
+      
       <div class="form-group is-hidden" id="album-title-group">
         <label class="form-label">Название альбома <span>*</span></label>
         <input type="text" class="form-input" name="albumTitle" id="album-title" placeholder="Название альбома">
         <div class="form-error" id="err-albumTitle">Введите название альбома</div>
       </div>
 
-      <!-- Track titles (dynamic for albums) -->
+      
       <div id="track-titles-group">
         <div class="form-group" id="single-title-group">
           <label class="form-label">Название трека <span>*</span></label>
@@ -115,7 +115,7 @@
     </form>
   </main>
 
-  <!-- No persistent player on add-track page per spec -->
+  
   <div id="toast-container"></div>
 
   <script src="/js/shared.js"></script>

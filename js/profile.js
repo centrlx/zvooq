@@ -1,11 +1,9 @@
-/**
- * profile.js — User profile page
- */
+
 
 async function initProfile() {
-  const log = (msg, data) => window.ZLog?.('profile', msg, data);
   const logErr = (msg, err) => window.ZError?.('profile', msg, err);
-  log('initProfile start');
+  
+const log = () => {};log('initProfile start');
   renderHeader('');
   const user = Auth.getUser();
   if (!user) { window.location.href = '/auth.html'; return; }

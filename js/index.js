@@ -1,7 +1,4 @@
-/**
- * index.js — Main page: render tracks, albums, playlists
- * Handles search, filter, play, favorite, delete
- */
+
 
 let allTracks = [];
 let allAlbums = [];
@@ -12,11 +9,12 @@ let shuffledPlaylists = [];
 let favTrackIds = [];
 let indexDocBound = false;
 const SHOW_LIMIT = 10;
-const log = (msg, data) => window.ZLog?.('index', msg, data);
 const logErr = (msg, err) => window.ZError?.('index', msg, err);
+
+const log = () => {};
 const isIndexDom = () => !!document.getElementById('search-input');
 
-// ── Init ────────────────────────────────────────────────────
+
 async function initIndex() {
   log('initIndex start');
   renderHeader('index');
@@ -55,7 +53,7 @@ async function loadData() {
   }
 }
 
-// ── Render ───────────────────────────────────────────────────
+
 
 function renderAll() {
   log('renderAll');
@@ -67,12 +65,12 @@ function renderAll() {
   const genreF    = document.getElementById('filter-genre').value;
   const typeF     = document.getElementById('filter-type').value;
 
-  // Standalone tracks (no albumId)
+
   let tracks = shuffledTracks.filter(t => !t.albumId);
   let albums = shuffledAlbums;
   let playlists = shuffledPlaylists;
 
-  // Apply search & filters
+
   if (query) {
     tracks = tracks.filter(t =>
       t.title.toLowerCase().includes(query) ||
@@ -127,7 +125,7 @@ function renderAll() {
   renderPlaylists(viewAll ? playlists : playlists.slice(0, SHOW_LIMIT), playlists.length);
   requestAnimationFrame(initAlbumTrackToggles);
 
-  // Tab mirrors
+
   document.getElementById('tracks-grid-tab').innerHTML = tracks.length
     ? tracks.map(t => buildCard(t, [], { favTrackIds })).join('')
     : emptyState('Треки не найдены');
@@ -212,7 +210,7 @@ function getAlbumTracks(albumId) {
   return allTracks.filter(t => t.albumId == albumId);
 }
 
-// ── Genre filter population ──────────────────────────────────
+
 
 function populateGenreFilter() {
   const genres = [...new Set([
@@ -227,7 +225,7 @@ function populateGenreFilter() {
   });
 }
 
-// ── Bind UI events ───────────────────────────────────────────
+
 
 function bindUI() {
   log('bindUI');
@@ -235,7 +233,7 @@ function bindUI() {
     log('bindUI skipped: DOM not index');
     return;
   }
-  // Tabs
+
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -245,7 +243,7 @@ function bindUI() {
     });
   });
 
-  // Search & Filter
+
   const searchInput = document.getElementById('search-input');
   const filterGenre = document.getElementById('filter-genre');
   const filterType  = document.getElementById('filter-type');
@@ -259,13 +257,13 @@ function bindUI() {
     addTrackLink.style.display = 'none';
   }
 
-  // Card actions (delegated)
+
   if (!indexDocBound) {
     document.addEventListener('click', handleCardClick);
     indexDocBound = true;
   }
 
-  // Playlist modal
+
   const newPlBtn = document.getElementById('new-playlist-btn');
   const modalClose = document.getElementById('modal-close-btn');
   const cancelPl = document.getElementById('cancel-playlist-btn');
@@ -285,7 +283,7 @@ function bindUI() {
   });
   if (createPl) createPl.addEventListener('click', createPlaylist);
 
-  // Close modal on overlay click
+
   if (modal) {
     modal.addEventListener('click', (e) => {
       if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
@@ -339,7 +337,7 @@ if (!window.__SPA__) {
 }
 
 async function handleCardClick(e) {
-  // Play track mini
+
   const playMini = e.target.closest('.track-play-mini');
   if (playMini) {
     log('track mini play');
@@ -358,7 +356,7 @@ async function handleCardClick(e) {
   const id     = btn.dataset.id;
   const type   = btn.dataset.type;
 
-  // Play album/track
+
   if (action === 'play') {
     log('play action', { id, type });
     if (type === 'album') {
@@ -371,7 +369,7 @@ async function handleCardClick(e) {
     return;
   }
 
-  // Favorite
+
   if (action === 'fav') {
     log('favorite action', { id });
     const isFav = await toggleFavorite(parseInt(id), btn);
@@ -401,14 +399,14 @@ async function handleCardClick(e) {
     return;
   }
 
-  // Edit
+
   if (action === 'edit') {
     log('edit action', { id, type });
     window.location.href = `/edit-track.html?id=${id}&type=${type}`;
     return;
   }
 
-  // Delete track/album
+
   if (action === 'delete') {
     log('delete action', { id, type });
     if (!confirm(`Удалить "${type === 'album' ? 'альбом' : 'трек'}"? Это действие нельзя отменить.`)) return;
@@ -427,7 +425,7 @@ async function handleCardClick(e) {
     return;
   }
 
-  // Delete playlist
+
   if (action === 'delete-playlist') {
     log('delete playlist action', { id });
     if (!confirm('Удалить плейлист?')) return;

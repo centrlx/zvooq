@@ -1,10 +1,7 @@
-/**
- * playlist.js — Playlists page logic
- */
+
 
 (() => {
   if (window.__playlistScriptLoaded) {
-    window.ZLog?.('playlist', 'script already loaded, skip re-init');
     return;
   }
   window.__playlistScriptLoaded = true;
@@ -12,9 +9,10 @@
   let allPlaylists = [];
   let allTracks = [];
   let currentPlaylistId = null;
-  const log = (msg, data) => window.ZLog?.('playlist', msg, data);
   const logErr = (msg, err) => window.ZError?.('playlist', msg, err);
-  const isPlaylistDom = () => !!document.getElementById('playlists-grid');
+  
+const log = () => {};
+const isPlaylistDom = () => !!document.getElementById('playlists-grid');
 
 async function initPlaylist() {
   log('initPlaylist start');
@@ -200,7 +198,7 @@ function bindUI() {
     log('bindUI skipped: DOM not playlist');
     return;
   }
-  // Back to list
+
   const backBtn = document.getElementById('back-to-list');
   if (backBtn) backBtn.addEventListener('click', () => {
     log('back to list');
@@ -211,7 +209,7 @@ function bindUI() {
     history.pushState({}, '', '/playlist.html');
   });
 
-  // Delete current playlist
+
   const deleteBtn = document.getElementById('delete-pl-btn');
   if (deleteBtn) {
     deleteBtn.addEventListener('click', () => {
@@ -220,7 +218,7 @@ function bindUI() {
     });
   }
 
-  // New playlist modal
+
   const newPlBtn = document.getElementById('new-pl-btn');
   const newPlModal = document.getElementById('new-pl-modal');
   const closeNewPl = document.getElementById('close-new-pl-modal');
@@ -239,7 +237,7 @@ function bindUI() {
     createPl.addEventListener('click', createPlaylist);
   }
 
-  // Add track to playlist modal
+
   const addTrackBtn = document.getElementById('add-track-to-pl-btn');
   const addTrackModal = document.getElementById('add-track-modal');
   const closeAddTrack = document.getElementById('close-add-track-modal');
@@ -261,7 +259,7 @@ function bindUI() {
     });
   }
 
-  // Close modals on overlay click
+
   if (newPlModal) {
     newPlModal.addEventListener('click', e => {
       if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');

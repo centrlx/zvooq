@@ -1,10 +1,11 @@
-// spa.js — lightweight SPA router (keeps player alive between pages)
+
 (function () {
   window.__SPA__ = true;
-  const log = (msg, data) => (window.ZLog ? window.ZLog('spa', msg, data) : console.log('[SPA]', msg, data || ''));
   const logErr = (msg, err) => (window.ZError ? window.ZError('spa', msg, err) : console.error('[SPA]', msg, err || ''));
 
-  const spaPaths = new Set([
+  
+const log = () => {};
+const spaPaths = new Set([
     '/index.html',
     '/playlist.html',
     '/favorite.html',
@@ -161,7 +162,7 @@
     loadPage(location.pathname + location.search, false);
   });
 
-  // Bootstrap current page
+
   (async () => {
     const path = normalizePath(location.pathname);
     if (!isSpaPath(path)) return;

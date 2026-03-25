@@ -1,12 +1,9 @@
-/* ═══════════════════════════════════════════════
-   ZVOOQ — Global Styles
-   Color palette: #E19898 #A2678A #4D3C77 #3F1D38
-═══════════════════════════════════════════════ */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:wght@300;400;500;600;700&display=swap');
 
-/* ── CSS Variables ── */
+
 :root {
   --rose:    #E19898;
   --mauve:   #A2678A;
@@ -29,7 +26,7 @@
   --glow:    0 0 24px rgba(161,103,138,0.3);
 }
 
-/* ── Reset & Base ── */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { scroll-behavior: smooth; }
@@ -44,7 +41,7 @@ body {
   line-height: 1.6;
 }
 
-/* Page transitions */
+
 .page-container {
   opacity: 1;
   transform: translateY(0);
@@ -83,14 +80,12 @@ img { max-width: 100%; display: block; }
   margin-right: 0;
 }
 
-/* ── Scrollbar ── */
+
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg2); }
 ::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 4px; }
 
-/* ══════════════════════════════════════════════
-   HEADER / NAV
-══════════════════════════════════════════════ */
+
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -210,9 +205,7 @@ img { max-width: 100%; display: block; }
   z-index: 998;
 }
 
-/* ══════════════════════════════════════════════
-   PLAYER (persistent bottom)
-══════════════════════════════════════════════ */
+
 #global-player {
   position: fixed;
   bottom: 0; left: 0; right: 0;
@@ -347,9 +340,7 @@ img { max-width: 100%; display: block; }
   cursor: pointer;
 }
 
-/* ══════════════════════════════════════════════
-   PAGE LAYOUT
-══════════════════════════════════════════════ */
+
 .page-container {
   max-width: 1280px;
   margin: 0 auto;
@@ -376,9 +367,7 @@ img { max-width: 100%; display: block; }
   margin-top: 4px;
 }
 
-/* ══════════════════════════════════════════════
-   SEARCH BAR
-══════════════════════════════════════════════ */
+
 .search-bar-wrap {
   display: flex;
   gap: 12px;
@@ -432,9 +421,7 @@ img { max-width: 100%; display: block; }
 .filter-select:focus { border-color: var(--mauve); }
 .filter-select option { background: var(--bg2); }
 
-/* ══════════════════════════════════════════════
-   SECTION
-══════════════════════════════════════════════ */
+
 .section { margin-bottom: 48px; }
 .section-header {
   display: flex;
@@ -477,9 +464,7 @@ img { max-width: 100%; display: block; }
   font-weight: 400;
 }
 
-/* ══════════════════════════════════════════════
-   CARD GRID
-══════════════════════════════════════════════ */
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -502,7 +487,7 @@ img { max-width: 100%; display: block; }
 .cards-row::-webkit-scrollbar-track { background: var(--bg2); }
 .cards-row::-webkit-scrollbar-thumb { background: var(--violet); border-radius: 4px; }
 
-/* ── Music Card ── */
+
 .music-card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -625,7 +610,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 12px;
 }
 
-/* Track list inside card */
+
 .card-tracks {
   border-top: 1px solid var(--border);
   margin-top: 10px;
@@ -699,7 +684,7 @@ img { max-width: 100%; display: block; }
 .track-fav-mini:hover { transform: scale(1.1); }
 .track-fav-mini .material-symbols-rounded { font-size: 16px; }
 
-/* Card meta footer */
+
 .card-meta {
   display: flex;
   gap: 12px;
@@ -748,9 +733,7 @@ img { max-width: 100%; display: block; }
 .card-btn.danger:hover { background: rgba(225,152,152,0.1); color: var(--rose); border-color: var(--rose); }
 .card-btn:hover { transform: translateY(-1px); }
 
-/* ══════════════════════════════════════════════
-   BUTTONS
-══════════════════════════════════════════════ */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -791,9 +774,7 @@ img { max-width: 100%; display: block; }
 .btn-sm { padding: 7px 14px; font-size: 13px; }
 .btn-icon { padding: 10px; }
 
-/* ══════════════════════════════════════════════
-   FORMS
-══════════════════════════════════════════════ */
+
 .form-card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -849,7 +830,7 @@ img { max-width: 100%; display: block; }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
-/* Drop Zone */
+
 .drop-zone {
   border: 2px dashed var(--border);
   border-radius: var(--radius);
@@ -892,7 +873,7 @@ img { max-width: 100%; display: block; }
 }
 .file-item .remove-file:hover { color: var(--rose); }
 
-/* Cover preview */
+
 .cover-preview {
   width: 100%;
   max-width: 200px;
@@ -912,9 +893,7 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
 }
 
-/* ══════════════════════════════════════════════
-   UTILITIES
-══════════════════════════════════════════════ */
+
 .is-hidden { display: none; }
 
 .flex { display: flex; }
@@ -1055,9 +1034,7 @@ img { max-width: 100%; display: block; }
   flex-shrink: 0;
 }
 
-/* ══════════════════════════════════════════════
-   TABS
-══════════════════════════════════════════════ */
+
 .tabs {
   display: flex;
   gap: 4px;
@@ -1085,9 +1062,7 @@ img { max-width: 100%; display: block; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* ══════════════════════════════════════════════
-   PLAYLIST CARD
-══════════════════════════════════════════════ */
+
 .playlist-card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -1122,9 +1097,7 @@ img { max-width: 100%; display: block; }
 }
 .playlist-info { font-size: 12px; color: var(--text3); }
 
-/* ══════════════════════════════════════════════
-   EMPTY STATE
-══════════════════════════════════════════════ */
+
 .empty-state {
   text-align: center;
   padding: 80px 24px;
@@ -1139,9 +1112,7 @@ img { max-width: 100%; display: block; }
 }
 .empty-state p { font-size: 14px; line-height: 1.6; }
 
-/* ══════════════════════════════════════════════
-   TOAST
-══════════════════════════════════════════════ */
+
 #toast-container {
   position: fixed;
   bottom: calc(var(--player-h) + 20px);
@@ -1178,9 +1149,7 @@ img { max-width: 100%; display: block; }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ══════════════════════════════════════════════
-   STATS
-══════════════════════════════════════════════ */
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1206,9 +1175,7 @@ img { max-width: 100%; display: block; }
 }
 .stat-label { font-size: 13px; color: var(--text3); }
 
-/* ══════════════════════════════════════════════
-   PROFILE
-══════════════════════════════════════════════ */
+
 .profile-hero {
   background: linear-gradient(135deg, var(--bg2), var(--bg3));
   border: 1px solid var(--border);
@@ -1237,9 +1204,7 @@ img { max-width: 100%; display: block; }
 }
 .profile-since { font-size: 13px; color: var(--text3); margin-top: 4px; }
 
-/* ══════════════════════════════════════════════
-   MODAL
-══════════════════════════════════════════════ */
+
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1290,9 +1255,7 @@ img { max-width: 100%; display: block; }
 }
 .modal-close:hover { color: var(--text); }
 
-/* ══════════════════════════════════════════════
-   ABOUT PAGE
-══════════════════════════════════════════════ */
+
 .about-hero {
   background: linear-gradient(135deg, var(--deep) 0%, var(--violet) 100%);
   border-radius: var(--radius);
@@ -1392,9 +1355,7 @@ img { max-width: 100%; display: block; }
   color: var(--text2);
 }
 
-/* ══════════════════════════════════════════════
-   AUTH PAGE
-══════════════════════════════════════════════ */
+
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -1428,9 +1389,7 @@ img { max-width: 100%; display: block; }
 .auth-switch a { color: var(--mauve); }
 .auth-switch a:hover { text-decoration: underline; }
 
-/* ══════════════════════════════════════════════
-   TRACK LIST (stats / archive)
-══════════════════════════════════════════════ */
+
 .track-list-item {
   display: flex;
   align-items: center;
@@ -1469,9 +1428,7 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
 }
 
-/* ══════════════════════════════════════════════
-   LOADING SPINNER
-══════════════════════════════════════════════ */
+
 .spinner {
   width: 32px; height: 32px;
   border: 3px solid var(--surface2);
@@ -1482,9 +1439,7 @@ img { max-width: 100%; display: block; }
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ══════════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════════ */
+
 @media (max-width: 768px) {
   .page-container { padding: 20px 16px; }
   .page-header { flex-direction: column; align-items: flex-start; }

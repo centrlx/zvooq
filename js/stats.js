@@ -1,11 +1,9 @@
-/**
- * stats.js — Statistics page
- */
+
 
 async function initStats() {
-  const log = (msg, data) => window.ZLog?.('stats', msg, data);
   const logErr = (msg, err) => window.ZError?.('stats', msg, err);
-  log('initStats start');
+  
+const log = () => {};log('initStats start');
   renderHeader('stats');
   try {
     const [statsData, tracks, albums, playlists] = await Promise.all([
@@ -16,7 +14,7 @@ async function initStats() {
     ]);
     log('data loaded', { tracks: tracks.length, albums: albums.length, playlists: playlists.length });
 
-    // Genre distribution
+
     const genreCounts = {};
     tracks.forEach(t => {
       if (t.genre) genreCounts[t.genre] = (genreCounts[t.genre] || 0) + 1;
@@ -24,7 +22,7 @@ async function initStats() {
     const topGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]).slice(0, 6);
     const maxGenreCount = topGenres[0]?.[1] || 1;
 
-    // Week breakdown (last 7 days)
+
     const weekDays = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
