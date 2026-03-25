@@ -275,6 +275,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   gap: 16px;
+  transform: translateY(7px);
 }
 
 .player-btn {
