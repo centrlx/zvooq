@@ -751,10 +751,10 @@ img { max-width: 100%; display: block; }
   white-space: nowrap;
 }
 .btn-primary {
-  background: linear-gradient(135deg, var(--mauve), var(--violet));
+  background: linear-gradient(135deg, var(--surface2), var(--deep));
   color: white;
 }
-.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--glow); }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--glow); filter: brightness(0.95); }
 .btn:active { transform: translateY(0); filter: brightness(0.98); }
 .btn-secondary {
   background: var(--surface);
