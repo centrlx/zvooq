@@ -21,7 +21,7 @@
     <!-- STEP 1: Upload audio files -->
     <div id="step-upload" class="form-card">
       <h2 class="form-title">Шаг 1: Загрузите аудио</h2>
-      <p style="color:var(--text3);font-size:14px;margin-bottom:20px;">
+      <p class="text-muted text-sm mb-20">
         1 файл → трек &nbsp;|&nbsp; 2+ файла → альбом
       </p>
 
@@ -34,18 +34,18 @@
 
       <div class="file-list" id="file-list"></div>
 
-      <div style="margin-top:20px;display:flex;gap:10px;">
+      <div class="flex gap-10 mt-20">
         <button class="btn btn-primary" id="proceed-btn" disabled>Далее →</button>
         <a href="/index.html" class="btn btn-secondary">Отмена</a>
       </div>
     </div>
 
     <!-- STEP 2: Form -->
-    <form id="track-form" class="form-card" style="display:none;" novalidate>
+    <form id="track-form" class="form-card is-hidden" novalidate>
       <h2 class="form-title" id="form-title-text">Информация о треке</h2>
 
       <!-- Album title (shown only for albums) -->
-      <div class="form-group" id="album-title-group" style="display:none;">
+      <div class="form-group is-hidden" id="album-title-group">
         <label class="form-label">Название альбома <span>*</span></label>
         <input type="text" class="form-input" name="albumTitle" id="album-title" placeholder="Название альбома">
         <div class="form-error" id="err-albumTitle">Введите название альбома</div>
@@ -58,7 +58,7 @@
           <input type="text" class="form-input" name="title" id="single-title" placeholder="Название">
           <div class="form-error" id="err-title">Введите название трека</div>
         </div>
-        <div id="multi-titles-group" style="display:none;"></div>
+        <div id="multi-titles-group" class="is-hidden"></div>
       </div>
 
       <div class="form-row">
@@ -83,9 +83,9 @@
 
       <div class="form-group">
         <label class="form-label">Обложка</label>
-        <label class="drop-zone" id="cover-drop-zone" style="padding:20px;">
-          <div class="drop-icon material-symbols-rounded" style="font-size:28px;">image</div>
-          <p style="font-size:13px;">Загрузить обложку</p>
+        <label class="drop-zone drop-zone--p20" id="cover-drop-zone">
+          <div class="drop-icon drop-icon-sm material-symbols-rounded">image</div>
+          <p class="text-xs">Загрузить обложку</p>
           <input type="file" id="cover-file" name="cover" accept="image/*">
         </label>
         <img class="cover-preview" id="cover-preview" src="" alt="Обложка">
@@ -107,7 +107,7 @@
         <textarea class="form-textarea" name="description" id="description" placeholder="О чём этот трек/альбом…"></textarea>
       </div>
 
-      <div style="display:flex;gap:10px;margin-top:8px;">
+      <div class="flex gap-10 mt-8">
         <button type="submit" class="btn btn-primary" id="save-btn"><span class="material-symbols-rounded">save</span> Сохранить</button>
         <button type="button" class="btn btn-secondary" id="back-btn">← Назад</button>
         <a href="/index.html" class="btn btn-secondary">Отмена</a>

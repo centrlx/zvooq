@@ -59,7 +59,7 @@ function renderPlaylistList() {
   const grid = document.getElementById('playlists-grid');
   log('renderPlaylistList', { count: allPlaylists.length });
   if (!allPlaylists.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+    grid.innerHTML = `<div class="empty-state empty-state-full">
       <div class="empty-icon material-symbols-rounded">queue_music</div>
       <h3>Нет плейлистов</h3>
       <p>Создайте первый плейлист, нажав кнопку выше</p>
@@ -87,13 +87,13 @@ function buildPlCard(pl) {
   const covers = tracks.slice(0, 4).map(t => t?.cover).filter(Boolean);
   const mosaicHTML = covers.length
     ? covers.map(c => `<img src="${c}" alt="" onerror="this.style.display='none'">`).join('')
-    : '<div style="background:var(--surface);width:100%;height:100%"></div>';
+    : '<div class="playlist-cover-fallback"></div>';
 
   return `<div class="playlist-card">
     <div class="playlist-cover-mosaic">${mosaicHTML}</div>
     <div class="playlist-title">${pl.title}</div>
     <div class="playlist-info">${tracks.length} трека · ${formatDuration(dur)}</div>
-    <div class="card-actions" style="margin-top:12px;">
+    <div class="card-actions">
       <button class="card-btn" data-open-pl="${pl.id}"><span class="material-symbols-rounded">play_arrow</span> Открыть</button>
       ${canEdit ? `<button class="card-btn danger" data-del-pl="${pl.id}"><span class="material-symbols-rounded">delete</span> Удалить</button>` : ''}
     </div>
@@ -137,15 +137,15 @@ function renderPlaylistTracks(pl) {
 
   container.innerHTML = tracks.map((t, i) => `
     <div class="track-list-item" data-track-id="${t.id}">
-      <span class="track-num" style="color:var(--text3);width:20px;text-align:center;">${i+1}</span>
+      <span class="track-num track-num-wide">${i+1}</span>
       <img class="track-list-cover" src="${t.cover || ''}" alt="" onerror="this.style.display='none'">
       <div class="track-list-info">
         <div class="track-list-title">${t.title}</div>
         <div class="track-list-artist">${t.artist}</div>
       </div>
-      <span style="font-size:12px;color:var(--text3);">${formatDuration(t.duration)}</span>
-      <button class="card-btn icon-only" style="flex:0;padding:6px 10px;" data-play="${t.id}" title="Воспроизвести"><span class="material-symbols-rounded">play_arrow</span></button>
-      ${canEdit ? `<button class="card-btn danger icon-only" style="flex:0;padding:6px 10px;" data-remove="${t.id}" title="Убрать"><span class="material-symbols-rounded">close</span></button>` : ''}
+      <span class="text-12 text-muted">${formatDuration(t.duration)}</span>
+      <button class="card-btn icon-only card-btn-tight" data-play="${t.id}" title="Воспроизвести"><span class="material-symbols-rounded">play_arrow</span></button>
+      ${canEdit ? `<button class="card-btn danger icon-only card-btn-tight" data-remove="${t.id}" title="Убрать"><span class="material-symbols-rounded">close</span></button>` : ''}
     </div>`).join('');
 
   container.querySelectorAll('[data-play]').forEach(btn => {
@@ -285,17 +285,17 @@ function renderModalTracks(query) {
 
   const list = document.getElementById('modal-track-list');
   if (!tracks.length) {
-    list.innerHTML = `<p style="color:var(--text3);font-size:14px;padding:16px 0;">Все треки уже в плейлисте или не найдено</p>`;
+    list.innerHTML = `<p class="empty-text">Все треки уже в плейлисте или не найдено</p>`;
     return;
   }
   list.innerHTML = tracks.map(t => `
-    <div class="track-list-item" style="cursor:pointer;" data-add-track="${t.id}">
+    <div class="track-list-item cursor-pointer" data-add-track="${t.id}">
       <img class="track-list-cover" src="${t.cover||''}" alt="" onerror="this.style.display='none'">
       <div class="track-list-info">
         <div class="track-list-title">${t.title}</div>
         <div class="track-list-artist">${t.artist}</div>
       </div>
-      <button class="btn btn-primary btn-sm" style="flex-shrink:0;">+ Добавить</button>
+      <button class="btn btn-primary btn-sm no-shrink">+ Добавить</button>
     </div>`).join('');
 
   list.querySelectorAll('[data-add-track]').forEach(el => {

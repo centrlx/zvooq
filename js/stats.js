@@ -40,7 +40,7 @@ async function initStats() {
 
     document.getElementById('stats-content').innerHTML = `
       <!-- KPI Cards -->
-      <div class="stats-grid" style="margin-bottom:32px;">
+      <div class="stats-grid mb-32">
         <div class="stat-card">
           <div class="stat-value">${tracks.length}</div>
           <div class="stat-label">Всего треков</div>
@@ -67,31 +67,31 @@ async function initStats() {
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+      <div class="stats-two-col">
         <!-- Genre Chart -->
         <div class="about-card">
           <h3><span class="material-symbols-rounded">music_note</span> Жанры</h3>
           ${topGenres.length ? topGenres.map(([genre, count]) => `
-            <div style="margin-bottom:12px;">
-              <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--text2);margin-bottom:4px;">
+            <div class="genre-row">
+              <div class="genre-row-head">
                 <span>${genre}</span><span>${count}</span>
               </div>
-              <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;">
-                <div style="height:100%;width:${(count/maxGenreCount*100).toFixed(1)}%;background:linear-gradient(90deg,var(--mauve),var(--rose));border-radius:3px;transition:width 0.6s;"></div>
+              <div class="genre-bar">
+                <div class="genre-bar-fill" data-w="${(count/maxGenreCount*100).toFixed(1)}"></div>
               </div>
-            </div>`).join('') : '<p style="color:var(--text3)">Нет данных</p>'}
+            </div>`).join('') : '<p class="text-muted">Нет данных</p>'}
         </div>
 
         <!-- Week activity -->
         <div class="about-card">
           <h3><span class="material-symbols-rounded">event</span> Активность за неделю</h3>
-          <div style="display:flex;align-items:flex-end;gap:8px;height:120px;padding-top:10px;">
+          <div class="week-chart">
             ${weekDays.map(d => `
-              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
-                <div style="flex:1;width:100%;display:flex;align-items:flex-end;">
-                  <div style="width:100%;height:${d.count ? Math.max(8,(d.count/maxDayCount*90)).toFixed(0) : 4}px;background:${d.count ? 'linear-gradient(to top,var(--violet),var(--mauve))' : 'var(--surface2)'};border-radius:3px 3px 0 0;transition:height 0.5s;"></div>
+              <div class="week-col">
+                <div class="week-col-body">
+                  <div class="week-bar" data-h="${d.count ? Math.max(8,(d.count/maxDayCount*90)).toFixed(0) : 4}" data-active="${d.count ? '1' : '0'}"></div>
                 </div>
-                <span style="font-size:10px;color:var(--text3);">${d.label}</span>
+                <span class="text-2xs text-muted">${d.label}</span>
               </div>`).join('')}
           </div>
         </div>
@@ -104,21 +104,36 @@ async function initStats() {
         </div>
         ${statsData.topTracks.length ? statsData.topTracks.map((t, i) => `
           <div class="track-list-item">
-            <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--mauve);width:28px;text-align:center;flex-shrink:0;">${i+1}</span>
+            <span class="rank-num">${i+1}</span>
             <img class="track-list-cover" src="${t.cover||''}" alt="" onerror="this.style.display='none'">
             <div class="track-list-info">
               <div class="track-list-title">${t.title}</div>
               <div class="track-list-artist">${t.artist}</div>
             </div>
             <span class="track-list-badge"><span class="material-symbols-rounded">favorite</span> ${t.favoriteTracks?.length || 0}</span>
-          </div>`).join('') : '<p style="color:var(--text3);font-size:14px;">Нет данных</p>'}
+          </div>`).join('') : '<p class="text-muted text-sm">Нет данных</p>'}
       </div>
     `;
+
+    applyStatsBars();
 
   } catch (e) {
     showToast('Ошибка загрузки статистики', 'error');
     logErr('initStats error', e);
   }
+}
+
+function applyStatsBars() {
+  document.querySelectorAll('.genre-bar-fill').forEach(el => {
+    const w = el.dataset.w || '0';
+    el.style.setProperty('--w', `${w}%`);
+  });
+  document.querySelectorAll('.week-bar').forEach(el => {
+    const h = el.dataset.h || '4';
+    const active = el.dataset.active === '1';
+    el.style.setProperty('--h', `${h}px`);
+    el.style.setProperty('--bar-bg', active ? 'linear-gradient(to top,var(--violet),var(--mauve))' : 'var(--surface2)');
+  });
 }
 
 window.PageInits = window.PageInits || {};

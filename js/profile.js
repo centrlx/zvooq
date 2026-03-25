@@ -28,7 +28,7 @@ async function initProfile() {
           <div class="profile-name">${user.username}</div>
           <div class="profile-since">На Zvooq с ${formatDate(user.createdAt)}</div>
         </div>
-        <div style="margin-left:auto;">
+        <div class="ml-auto">
           <button class="btn btn-danger btn-sm" id="logout-btn">Выйти</button>
         </div>
       </div>
@@ -60,11 +60,11 @@ async function initProfile() {
             return `<div class="playlist-card">
               <div class="playlist-title">${pl.title}</div>
               <div class="playlist-info">${tracks.length} треков · ${formatDuration(dur)}</div>
-              <div class="card-actions" style="margin-top:10px;">
+              <div class="card-actions mt-10">
                 <a href="/playlist.html?id=${pl.id}" class="card-btn"><span class="material-symbols-rounded">play_arrow</span> Открыть</a>
               </div>
             </div>`;
-          }).join('') : '<p style="color:var(--text3);font-size:14px;">Плейлистов пока нет</p>'}
+          }).join('') : '<p class="text-muted text-sm">Плейлистов пока нет</p>'}
         </div>
       </div>
 
@@ -85,7 +85,7 @@ async function initProfile() {
               </div>
               <span class="track-list-badge"><span class="material-symbols-rounded">favorite</span></span>
             </div>`;
-          }).join('') || '<p style="color:var(--text3);font-size:14px;">Нет избранных треков</p>'}
+          }).join('') || '<p class="text-muted text-sm">Нет избранных треков</p>'}
         </div>
       </div>
     `;

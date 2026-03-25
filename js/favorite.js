@@ -12,11 +12,11 @@ async function initFavorite() {
   const user = Auth.getUser();
   if (!user) {
     document.getElementById('fav-grid').innerHTML = `
-      <div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state empty-state-full">
         <div class="empty-icon material-symbols-rounded">lock</div>
         <h3>Войдите в аккаунт</h3>
         <p>Чтобы видеть избранные треки</p>
-        <a href="/auth.html" class="btn btn-primary" style="margin-top:16px;">Войти</a>
+        <a href="/auth.html" class="btn btn-primary mt-16">Войти</a>
       </div>`;
     document.getElementById('fav-subtitle').textContent = '';
     log('no user, show login state');
@@ -54,11 +54,11 @@ function renderFavorites() {
 
   if (!favTracks.length) {
     grid.innerHTML = `
-      <div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-state empty-state-full">
         <div class="empty-icon material-symbols-rounded">heart_broken</div>
         <h3>Здесь пока пусто</h3>
         <p>Ты вообще что-нибудь слушаешь?<br>Добавляй треки в избранное через <span class="material-symbols-rounded">favorite</span></p>
-        <a href="/index.html" class="btn btn-primary" style="margin-top:16px;">Перейти к музыке</a>
+        <a href="/index.html" class="btn btn-primary mt-16">Перейти к музыке</a>
       </div>`;
     return;
   }
@@ -91,9 +91,7 @@ function bindCardEvents() {
       // Remove card from DOM immediately
       const card = document.getElementById(`track-${id}`);
       if (card) {
-        card.style.transition = 'opacity 0.3s, transform 0.3s';
-        card.style.opacity = '0';
-        card.style.transform = 'scale(0.9)';
+        card.classList.add('is-removing');
         setTimeout(() => {
           favTracks = favTracks.filter(t => t.id !== id);
           card.remove();

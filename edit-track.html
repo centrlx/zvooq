@@ -20,10 +20,10 @@
 
     <div id="edit-loading" class="spinner"></div>
 
-    <form id="edit-form" class="form-card" style="display:none;" novalidate>
+    <form id="edit-form" class="form-card is-hidden" novalidate>
       <h2 class="form-title" id="edit-form-title">Редактирование</h2>
 
-      <div class="form-group" id="album-title-group" style="display:none;">
+      <div class="form-group is-hidden" id="album-title-group">
         <label class="form-label">Название альбома <span>*</span></label>
         <input type="text" class="form-input" id="edit-album-title">
       </div>
@@ -53,7 +53,7 @@
 
       <div class="form-group">
         <label class="form-label">Обложка (текущая)</label>
-        <img id="edit-cover-preview" src="" alt="" style="width:120px;height:120px;border-radius:10px;object-fit:cover;border:1px solid var(--border);">
+        <img id="edit-cover-preview" class="cover-preview-sm" src="" alt="">
       </div>
 
       <div class="form-row">
@@ -72,7 +72,7 @@
         <textarea class="form-textarea" id="edit-description"></textarea>
       </div>
 
-      <div style="display:flex;gap:10px;margin-top:8px;">
+      <div class="flex gap-10 mt-8">
         <button type="submit" class="btn btn-primary"><span class="material-symbols-rounded">save</span> Сохранить изменения</button>
         <a href="/index.html" class="btn btn-secondary">Отмена</a>
       </div>

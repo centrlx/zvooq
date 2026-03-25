@@ -6,6 +6,9 @@
 let allTracks = [];
 let allAlbums = [];
 let allPlaylists = [];
+let shuffledTracks = [];
+let shuffledAlbums = [];
+let shuffledPlaylists = [];
 let favTrackIds = [];
 let indexDocBound = false;
 const SHOW_LIMIT = 10;
@@ -36,6 +39,9 @@ async function loadData() {
       API.get('/api/albums'),
       API.get('/api/playlists')
     ]);
+    shuffledTracks = shuffleArray(allTracks);
+    shuffledAlbums = shuffleArray(allAlbums);
+    shuffledPlaylists = shuffleArray(allPlaylists);
     log('loadData loaded', { tracks: allTracks.length, albums: allAlbums.length, playlists: allPlaylists.length });
     if (!isIndexDom()) {
       log('loadData abort render: DOM not index anymore');
@@ -62,8 +68,9 @@ function renderAll() {
   const typeF     = document.getElementById('filter-type').value;
 
   // Standalone tracks (no albumId)
-  let tracks = allTracks.filter(t => !t.albumId);
-  let albums = allAlbums;
+  let tracks = shuffledTracks.filter(t => !t.albumId);
+  let albums = shuffledAlbums;
+  let playlists = shuffledPlaylists;
 
   // Apply search & filters
   if (query) {
@@ -117,7 +124,7 @@ function renderAll() {
 
   renderTracks(viewAll ? tracks : tracks.slice(0, SHOW_LIMIT), tracks.length);
   renderAlbums(viewAll ? albums : albums.slice(0, SHOW_LIMIT), albums.length);
-  renderPlaylists(viewAll ? allPlaylists : allPlaylists.slice(0, SHOW_LIMIT), allPlaylists.length);
+  renderPlaylists(viewAll ? playlists : playlists.slice(0, SHOW_LIMIT), playlists.length);
   requestAnimationFrame(initAlbumTrackToggles);
 
   // Tab mirrors
@@ -127,8 +134,8 @@ function renderAll() {
   document.getElementById('albums-grid-tab').innerHTML = albums.length
     ? albums.map(a => buildCard(a, getAlbumTracks(a.id), { isAlbum: true, favTrackIds })).join('')
     : emptyState('Альбомы не найдены');
-  document.getElementById('playlists-grid-tab').innerHTML = allPlaylists.length
-    ? allPlaylists.map(p => buildPlaylistCard(p)).join('')
+  document.getElementById('playlists-grid-tab').innerHTML = playlists.length
+    ? playlists.map(p => buildPlaylistCard(p)).join('')
     : emptyState('Плейлисты не найдены');
 
   setRowMode(!viewAll);
@@ -163,6 +170,15 @@ function renderPlaylists(playlists, total = playlists.length) {
   toggleShowAll('playlists', total);
 }
 
+function shuffleArray(arr) {
+  const out = Array.isArray(arr) ? [...arr] : [];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
 function buildPlaylistCard(playlist) {
   const user = Auth.getUser();
   const canEdit = user && (playlist.userId == user.id || user.isAdmin === true || user.isAdmin === 1);
@@ -171,14 +187,14 @@ function buildPlaylistCard(playlist) {
   const covers = tracks.slice(0, 4).map(t => t?.cover).filter(Boolean);
   const mosaicHTML = covers.length
     ? covers.map(c => `<img src="${c}" alt="" onerror="this.style.display='none'">`).join('')
-    : '<div style="background:var(--surface);width:100%;height:100%"></div>';
+    : '<div class="playlist-cover-fallback"></div>';
 
   return `
     <div class="playlist-card" data-pl-id="${playlist.id}">
       <div class="playlist-cover-mosaic">${mosaicHTML}</div>
       <div class="playlist-title">${playlist.title}</div>
       <div class="playlist-info">${tracks.length} трека · ${formatDuration(dur)}</div>
-      <div class="card-actions" style="margin-top:12px;">
+      <div class="card-actions">
         <a href="/playlist.html?id=${playlist.id}" class="card-btn"><span class="material-symbols-rounded">play_arrow</span> Открыть</a>
         ${canEdit ? `<button class="card-btn danger" data-action="delete-playlist" data-id="${playlist.id}"><span class="material-symbols-rounded">delete</span> Удалить</button>` : ''}
       </div>
@@ -186,7 +202,7 @@ function buildPlaylistCard(playlist) {
 }
 
 function emptyState(msg) {
-  return `<div class="empty-state" style="grid-column:1/-1;padding:40px 0;">
+  return `<div class="empty-state empty-state-full empty-state-pad">
     <div class="empty-icon material-symbols-rounded">music_note</div>
     <p>${msg}</p>
   </div>`;

@@ -23,7 +23,7 @@ async function initArchive() {
     }
 
     container.innerHTML = `
-      <p style="color:var(--text3);font-size:13px;margin-bottom:20px;">
+      <p class="text-muted text-xs mb-20">
         ${archive.length} удалённых элементов
       </p>
       ${archive.slice().reverse().map(item => `
@@ -33,9 +33,9 @@ async function initArchive() {
             <div class="track-list-title">${item.title}</div>
             <div class="track-list-artist">${item.artist} · ${item.genre || '—'}</div>
           </div>
-          <div style="text-align:right;flex-shrink:0;">
-            <div style="font-size:11px;color:var(--text3);">${item.type === 'album' ? '<span class="material-symbols-rounded" style="font-size:14px;">album</span> Альбом' : '<span class="material-symbols-rounded" style="font-size:14px;">music_note</span> Трек'}</div>
-            <div style="font-size:11px;color:var(--text3);margin-top:2px;">
+          <div class="text-right no-shrink">
+            <div class="text-xxs text-muted">${item.type === 'album' ? '<span class="material-symbols-rounded icon-sm">album</span> Альбом' : '<span class="material-symbols-rounded icon-sm">music_note</span> Трек'}</div>
+            <div class="text-xxs text-muted mt-2">
               Удалён: ${formatDate(item.deletedAt)}
             </div>
           </div>

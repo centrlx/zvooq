@@ -490,9 +490,50 @@ function renderHeader(activePage = '') {
   if (header) {
     header.innerHTML = `
       <a href="/index.html" class="header-logo">Zvooq</a>
-      <nav class="header-nav">${navHTML}</nav>
-      <div class="header-actions">${userHTML}</div>
+      <button class="header-burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="header-menu">
+        <span class="material-symbols-rounded">menu</span>
+      </button>
+      <div class="header-menu" id="header-menu">
+        <nav class="header-nav">${navHTML}</nav>
+        <div class="header-actions">${userHTML}</div>
+      </div>
+      <div class="header-scrim" data-action="menu-close" aria-hidden="true"></div>
     `;
+
+    const burger = header.querySelector('.header-burger');
+    const scrim = header.querySelector('.header-scrim');
+    const closeMenu = () => {
+      header.classList.remove('menu-open');
+      document.body.classList.remove('menu-open');
+      if (burger) burger.setAttribute('aria-expanded', 'false');
+    };
+    const openMenu = () => {
+      header.classList.add('menu-open');
+      document.body.classList.add('menu-open');
+      if (burger) burger.setAttribute('aria-expanded', 'true');
+    };
+
+    if (burger) {
+      burger.addEventListener('click', () => {
+        if (header.classList.contains('menu-open')) closeMenu();
+        else openMenu();
+      });
+    }
+    if (scrim) scrim.addEventListener('click', closeMenu);
+    header.querySelectorAll('.header-nav a').forEach(link => link.addEventListener('click', closeMenu));
+
+    if (!window.__zvooqHeaderEscBound) {
+      window.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        const currentHeader = document.getElementById('site-header');
+        if (!currentHeader) return;
+        currentHeader.classList.remove('menu-open');
+        document.body.classList.remove('menu-open');
+        const currentBurger = currentHeader.querySelector('.header-burger');
+        if (currentBurger) currentBurger.setAttribute('aria-expanded', 'false');
+      });
+      window.__zvooqHeaderEscBound = true;
+    }
   }
 }
 

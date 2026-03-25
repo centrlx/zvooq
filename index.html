@@ -18,7 +18,7 @@
       </div>
       <a href="/add-track.html" class="btn btn-primary" id="add-track-link">+ Добавить трек</a>
     </div>
-    <div class="page-header" id="view-all-header" style="display:none;margin-top:-8px;">
+    <div class="page-header is-hidden mt-neg-8" id="view-all-header">
       <div>
         <h1 class="page-title" id="view-all-title">Все</h1>
         <p class="page-subtitle" id="view-all-subtitle">Полный список</p>
@@ -56,7 +56,7 @@
         <div class="section-header">
           <div class="section-title-wrap">
             <h2 class="section-title"><span class="dot"></span> Треки <span class="section-count" id="track-count"></span></h2>
-            <button class="section-link" id="tracks-show-all" style="display:none;">Показать все</button>
+            <button class="section-link is-hidden" id="tracks-show-all">Показать все</button>
           </div>
         </div>
         <div class="cards-grid cards-row" id="tracks-grid">
@@ -67,7 +67,7 @@
         <div class="section-header">
           <div class="section-title-wrap">
             <h2 class="section-title"><span class="dot"></span> Альбомы <span class="section-count" id="album-count"></span></h2>
-            <button class="section-link" id="albums-show-all" style="display:none;">Показать все</button>
+            <button class="section-link is-hidden" id="albums-show-all">Показать все</button>
           </div>
         </div>
         <div class="cards-grid cards-row" id="albums-grid">
@@ -78,7 +78,7 @@
         <div class="section-header">
           <div class="section-title-wrap">
             <h2 class="section-title"><span class="dot"></span> Плейлисты <span class="section-count" id="playlist-count"></span></h2>
-            <button class="section-link" id="playlists-show-all" style="display:none;">Показать все</button>
+            <button class="section-link is-hidden" id="playlists-show-all">Показать все</button>
           </div>
           <button class="btn btn-outline btn-sm" id="new-playlist-btn">+ Плейлист</button>
         </div>
@@ -115,7 +115,7 @@
         <label class="form-label">Название <span>*</span></label>
         <input type="text" class="form-input" id="playlist-name-input" placeholder="Например: Вечерние">
       </div>
-      <div style="display:flex;gap:10px;margin-top:8px;">
+      <div class="flex gap-10 mt-8">
         <button class="btn btn-primary" id="create-playlist-btn">Создать</button>
         <button class="btn btn-secondary" id="cancel-playlist-btn">Отмена</button>
       </div>

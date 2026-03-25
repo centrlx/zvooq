@@ -144,11 +144,11 @@ function buildForm() {
     multiGroup.style.display  = 'block';
     const genreOptions = document.getElementById('genre').innerHTML;
     multiGroup.innerHTML = `
-      <label class="form-label" style="margin-bottom:10px;">Метаданные треков <span style="color:var(--rose)">*</span></label>
+      <label class="form-label mb-10">Метаданные треков <span class="text-rose">*</span></label>
       ${selectedFiles.map((f, i) => `
-        <div class="form-group" style="display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start;">
-          <span class="track-num" style="flex-shrink:0;width:24px;text-align:center;color:var(--text3);line-height:40px;">${i+1}</span>
-          <div style="display:grid;gap:8px;">
+        <div class="form-group meta-grid-row">
+          <span class="track-num track-num-sm">${i+1}</span>
+          <div class="grid-gap-8">
             <input type="text" class="form-input track-title-input" placeholder="Название трека ${i+1}" value="${f.name.replace(/\.[^.]+$/, '')}">
             <input type="text" class="form-input track-artist-input" placeholder="Артист(ы) (если пусто — как у альбома)">
             <select class="form-select track-genre-input">
