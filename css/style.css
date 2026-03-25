@@ -616,6 +616,9 @@ img { max-width: 100%; display: block; }
   margin-top: 10px;
   padding-top: 10px;
 }
+.card-tracks:not(.expanded) .card-tracks-list .card-track-row:nth-child(n+4) {
+  display: none;
+}
 .card-tracks-list {
   overflow: hidden;
   transition: max-height 0.25s ease;

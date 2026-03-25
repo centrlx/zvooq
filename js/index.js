@@ -389,7 +389,7 @@ async function handleCardClick(e) {
     setAlbumTracksHeight(tracksWrap, isExpanded);
     btn.innerHTML = isExpanded
       ? `<span class="material-symbols-rounded">expand_less</span> Скрыть`
-      : `<span class="material-symbols-rounded">expand_more</span> Показать еще ${more}`;
+      : `<span class="material-symbols-rounded">expand_more</span> Показать еще ${more} треков`;
     const albumId = tracksWrap.dataset.albumId;
     if (albumId) {
       const map = getAlbumExpandMap();

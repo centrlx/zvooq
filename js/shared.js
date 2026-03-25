@@ -546,7 +546,7 @@ function buildCard(item, albumTracks, options = {}) {
           </div>
           ${hasMore ? `<button class="track-show-toggle" data-action="toggle-tracks" data-more="${albumTracks.length - showLimit}">
             <span class="material-symbols-rounded">${isExpandedTracks ? 'expand_less' : 'expand_more'}</span>
-            ${isExpandedTracks ? 'Скрыть' : `Показать еще ${albumTracks.length - showLimit}`}
+            ${isExpandedTracks ? 'Скрыть' : `Показать еще ${albumTracks.length - showLimit} треков`}
           </button>` : ''}
          </div>`;
       })()
