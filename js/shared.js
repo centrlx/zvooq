@@ -260,6 +260,16 @@ const Player = (() => {
       vol:     document.getElementById('volume-slider')
     };
 
+    const btnPrev = document.getElementById('player-prev');
+    const btnNext = document.getElementById('player-next');
+    const btnShuffle = document.getElementById('player-shuffle');
+    const btnRepeat = document.getElementById('player-repeat');
+    if (ui.playBtn) ui.playBtn.addEventListener('click', togglePlay);
+    if (btnPrev) btnPrev.addEventListener('click', prev);
+    if (btnNext) btnNext.addEventListener('click', next);
+    if (btnShuffle) btnShuffle.addEventListener('click', shuffle);
+    if (btnRepeat) btnRepeat.addEventListener('click', toggleRepeat);
+
 
     ui.progBar.addEventListener('click', (e) => {
       const rect = ui.progBar.getBoundingClientRect();
