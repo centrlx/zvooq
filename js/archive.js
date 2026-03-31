@@ -1,7 +1,7 @@
 
 
 async function initArchive() {
-  const logErr = (msg, err) => window.ZError?.('archive', msg, err);
+  const logErr = () => {};
   
 const log = () => {};log('initArchive start');
   renderHeader('archive');

@@ -1,11 +1,16 @@
-
+(() => {
 
 let favTracks = [];
-const logErr = (msg, err) => window.ZError?.('favorite', msg, err);
+const logErr = () => {};
 
 
-const log = () => {};async function initFavorite() {
+const log = () => {};
+async function initFavorite() {
   log('initFavorite start');
+  if (!document.getElementById('fav-grid')) {
+    requestAnimationFrame(initFavorite);
+    return;
+  }
   renderHeader('favorite');
   const user = Auth.getUser();
   if (!user) {
@@ -121,3 +126,4 @@ function plural(n, one, few, many) {
   if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return few;
   return many;
 }
+})();

@@ -5,15 +5,6 @@
 
 
 
-function ZError(scope, message, error) {
-  if (window.__ZLOG_DISABLED__) return;
-  console.error(`[Zvooq] ${scope}: ${message}`, error || '');
-}
-
-window.ZError = ZError;
-
-
-
 
 
 const API = {
@@ -24,7 +15,7 @@ const API = {
       const data = await res.json();
       return data;
     } catch (e) {
-      ZError('API', `GET ${url} ✗`, e);
+      console.error('[API] GET', url, e);
       throw e;
     }
   },
@@ -39,7 +30,7 @@ const API = {
       const out = await res.json();
       return out;
     } catch (e) {
-      ZError('API', `POST ${url} ✗`, e);
+      console.error('[API] POST', url, e);
       throw e;
     }
   },
@@ -54,7 +45,7 @@ const API = {
       const out = await res.json();
       return out;
     } catch (e) {
-      ZError('API', `PUT ${url} ✗`, e);
+      console.error('[API] PUT', url, e);
       throw e;
     }
   },
@@ -65,7 +56,7 @@ const API = {
       const out = await res.json();
       return out;
     } catch (e) {
-      ZError('API', `DELETE ${url} ✗`, e);
+      console.error('[API] DELETE', url, e);
       throw e;
     }
   },
@@ -76,7 +67,7 @@ const API = {
       const out = await res.json();
       return out;
     } catch (e) {
-      ZError('API', `POST_FORM ${url} ✗`, e);
+      console.error('[API] POST_FORM', url, e);
       throw e;
     }
   }
@@ -92,7 +83,7 @@ const Auth = {
       const u = JSON.parse(localStorage.getItem('zvooq_user'));
       return u;
     } catch (e) {
-      ZError('Auth', 'getUser parse error', e);
+      console.error('[Auth] getUser parse error', e);
       return null;
     }
   },

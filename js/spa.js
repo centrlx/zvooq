@@ -1,7 +1,7 @@
 
 (function () {
   window.__SPA__ = true;
-  const logErr = (msg, err) => (window.ZError ? window.ZError('spa', msg, err) : console.error('[SPA]', msg, err || ''));
+  const logErr = (msg, err) => console.error('[SPA]', msg, err || '');
 
   
 const log = () => {};
@@ -66,7 +66,7 @@ const spaPaths = new Set([
       log('inject script', src);
       const s = document.createElement('script');
       s.src = src;
-      s.defer = true;
+      s.async = false;
       s.dataset.spaSrc = src;
       s.onload = () => { s.dataset.spaLoaded = '1'; resolve(); };
       s.onerror = () => reject(new Error(`Failed to load ${src}`));
@@ -94,6 +94,20 @@ const spaPaths = new Set([
       log('calling window init', fnName);
       await window[fnName]();
       return true;
+    }
+    return false;
+  }
+
+  async function runInitWithRetry(path, tries = 3) {
+    for (let i = 0; i < tries; i++) {
+      await new Promise(requestAnimationFrame);
+      try {
+        const ok = await runRouteInit(path);
+        if (ok) return true;
+      } catch (e) {
+        logErr('route init error', e);
+      }
+      await new Promise(r => setTimeout(r, 50));
     }
     return false;
   }
@@ -139,7 +153,10 @@ const spaPaths = new Set([
 
     await ensureRouteScript(path);
     log('script ensured for', path);
-    await runRouteInit(path);
+    const initOk = await runInitWithRetry(path, 5);
+    if (!initOk) {
+      logErr('route init failed', path);
+    }
 
     if (push) history.pushState({}, '', u.pathname + u.search);
   }
@@ -168,7 +185,10 @@ const spaPaths = new Set([
     if (!isSpaPath(path)) return;
     log('bootstrap', path);
     await ensureRouteScript(path);
-    await runRouteInit(path);
+    const initOk = await runInitWithRetry(path, 5);
+    if (!initOk) {
+      logErr('bootstrap init failed', path);
+    }
     const main = document.querySelector('main');
     if (main) {
       main.classList.add('is-fading');

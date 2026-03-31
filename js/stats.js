@@ -1,7 +1,7 @@
 
 
 async function initStats() {
-  const logErr = (msg, err) => window.ZError?.('stats', msg, err);
+  const logErr = () => {};
   
 const log = () => {};log('initStats start');
   renderHeader('stats');

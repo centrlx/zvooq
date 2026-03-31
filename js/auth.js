@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function handleLogin() {
-  const logErr = (msg, err) => window.ZError?.('auth', msg, err);
+  const logErr = () => {};
   
 const log = () => {};log('handleLogin');
   const username = document.getElementById('login-username').value.trim();
@@ -51,7 +51,7 @@ const log = () => {};log('handleLogin');
 }
 
 async function handleRegister() {
-  const logErr = (msg, err) => window.ZError?.('auth', msg, err);
+  const logErr = () => {};
   log('handleRegister');
   const username  = document.getElementById('reg-username').value.trim();
   const password  = document.getElementById('reg-password').value;

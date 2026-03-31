@@ -1,7 +1,7 @@
 
 
 async function initProfile() {
-  const logErr = (msg, err) => window.ZError?.('profile', msg, err);
+  const logErr = () => {};
   
 const log = () => {};log('initProfile start');
   renderHeader('');

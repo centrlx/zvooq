@@ -1,7 +1,7 @@
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const logErr = (msg, err) => window.ZError?.('edit-track', msg, err);
+  const logErr = () => {};
   
 const log = () => {};log('DOMContentLoaded');
   renderHeader('');

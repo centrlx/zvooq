@@ -9,13 +9,17 @@
   let allPlaylists = [];
   let allTracks = [];
   let currentPlaylistId = null;
-  const logErr = (msg, err) => window.ZError?.('playlist', msg, err);
+  const logErr = () => {};
   
 const log = () => {};
 const isPlaylistDom = () => !!document.getElementById('playlists-grid');
 
 async function initPlaylist() {
   log('initPlaylist start');
+  if (!isPlaylistDom()) {
+    requestAnimationFrame(initPlaylist);
+    return;
+  }
   renderHeader('playlist');
   bindUI();
   await loadData();

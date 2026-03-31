@@ -3,7 +3,7 @@
 let selectedFiles = [];
 let isAlbum = false;
 const fileDurations = new Map();
-const logErr = (msg, err) => window.ZError?.('add-track', msg, err);
+const logErr = () => {};
 
 
 const log = () => {};function fileKey(f) {

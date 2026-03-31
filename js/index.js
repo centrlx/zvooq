@@ -1,4 +1,4 @@
-
+(() => {
 
 let allTracks = [];
 let allAlbums = [];
@@ -9,7 +9,7 @@ let shuffledPlaylists = [];
 let favTrackIds = [];
 let indexDocBound = false;
 const SHOW_LIMIT = 10;
-const logErr = (msg, err) => window.ZError?.('index', msg, err);
+const logErr = () => {};
 
 const log = () => {};
 const isIndexDom = () => !!document.getElementById('search-input');
@@ -17,6 +17,10 @@ const isIndexDom = () => !!document.getElementById('search-input');
 
 async function initIndex() {
   log('initIndex start');
+  if (!isIndexDom()) {
+    requestAnimationFrame(initIndex);
+    return;
+  }
   renderHeader('index');
   const user = Auth.getUser();
   favTrackIds = user?.favoriteTracks || [];
@@ -495,3 +499,4 @@ async function createPlaylist() {
     log('createPlaylist done', pl);
   } catch { showToast('Ошибка создания', 'error'); }
 }
+})();
